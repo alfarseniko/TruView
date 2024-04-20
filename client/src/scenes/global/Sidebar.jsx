@@ -170,7 +170,7 @@ const Sidebar = () => {
             />
             <Item
               title="Claims Management"
-              to="/form"
+              to="/claims"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

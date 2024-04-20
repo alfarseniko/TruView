@@ -4,7 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 
-const Form = () => {
+const Claims = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
@@ -13,7 +13,7 @@ const Form = () => {
 
   return (
     <Box m="20px">
-      <Header title="DOCUMENTS MANAGER" subtitle="Send documents to other stakeholders!" />
+      <Header title="CLAIMS MANAGEMENT" subtitle="File a claim to start a dispute" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -151,4 +151,4 @@ const initialValues = {
   address2: "",
 };
 
-export default Form;
+export default Claims;
