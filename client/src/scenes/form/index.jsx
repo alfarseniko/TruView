@@ -5,6 +5,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import * as React from 'react';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -19,6 +24,19 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 const Form = () => {
+
+  const [stakeholder, setStakeHolder] = React.useState('');
+
+  const handleChangesStake = (event) => {
+    setStakeHolder(event.target.value);
+  };
+
+  const [document, setDoc] = React.useState('');
+
+  const handleChangesDoc = (event) => {
+    setDoc(event.target.value);
+  };
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
@@ -51,19 +69,20 @@ const Form = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Stakeholder"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
+              <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
+                <InputLabel id="demo-simple-select-label">Stakeholder</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={stakeholder}
+                  label="Stakeholder"
+                  onChange={handleChangesStake}
+                >
+                  <MenuItem value={"client"}>Client</MenuItem>
+                  <MenuItem value={"engineer"}>Engineer</MenuItem>
+                  <MenuItem value={"contractor"}>Contractor</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
@@ -75,21 +94,22 @@ const Form = () => {
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Document Type"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
+              <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
+                <InputLabel id="document-type-select">Document Type</InputLabel>
+                <Select
+                  labelId="document-type-select"
+                  id="document-type"
+                  value={document}
+                  label="Document"
+                  onChange={handleChangesDoc}
+                >
+                  <MenuItem value={"rfi"}>RFI</MenuItem>
+                  <MenuItem value={"ipc"}>IPC</MenuItem>
+                  <MenuItem value={"drawing"}>Drawing</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
@@ -97,10 +117,10 @@ const Form = () => {
                 label="Message"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.address1}
+                name="address1"
+                error={!!touched.address1 && !!errors.address1}
+                helperText={touched.address1 && errors.address1}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
