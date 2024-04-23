@@ -92,9 +92,13 @@ const Claims = () => {
                   label="Document"
                   onChange={handleChangesDoc}
                 >
-                  <MenuItem value={"rfi"}>RFI</MenuItem>
-                  <MenuItem value={"ipc"}>IPC</MenuItem>
-                  <MenuItem value={"drawing"}>Drawing</MenuItem>
+                  <MenuItem value={"rfi"}>Extension of Time</MenuItem>
+                  <MenuItem value={"ipc"}>Constructive Change</MenuItem>
+                  <MenuItem value={"drawing"}>Liquidated Damages</MenuItem>
+                  <MenuItem value={"drawing"}>Improper Notice</MenuItem>
+                  <MenuItem value={"drawing"}>Disruption</MenuItem>
+                  <MenuItem value={"drawing"}>Escalation Cost</MenuItem>
+                  <MenuItem value={"drawing"}>Termination</MenuItem>
                 </Select>
               </FormControl>
               <TextField
