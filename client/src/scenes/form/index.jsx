@@ -23,25 +23,51 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
+const checkoutSchema = yup.object().shape({
+  stakeholder: yup.string().required("required"),
+  blockchainAddress: yup.string().required("required"),
+  documentType: yup.string().required("required"),
+  message: yup.string().required("required"),
+});
+
+const initialValues = {
+  stakeholder: "",
+  blockchainAddress: "",
+  documentType: "",
+  message: "",
+};
+
 const Form = () => {
-
-  const [stakeholder, setStakeHolder] = React.useState('');
-
-  const handleChangesStake = (event) => {
-    setStakeHolder(event.target.value);
-  };
-
-  const [document, setDoc] = React.useState('');
-
-  const handleChangesDoc = (event) => {
-    setDoc(event.target.value);
-  };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
-  };
+  const handleFormSubmit = async (values) => {
+      try {
+        const response = await fetch('http://localhost:3001/form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result)
+        });
+
+        if (response.ok) {
+          // Handle successful response
+          console.log('Data sent successfully');
+          console.log("data: " + values);
+        } else {
+          // Handle error response
+          console.error('Failed to send data');
+        }
+      } catch (error) {
+        // Handle network error
+        console.error('Network error', error);
+      }
+    };
 
   return (
     <Box m="20px">
@@ -74,9 +100,11 @@ const Form = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={stakeholder}
+                  defaultValue=""
+                  value={values.stakeholder}
                   label="Stakeholder"
-                  onChange={handleChangesStake}
+                  name="stakeholder"
+                  onChange={handleChange}
                 >
                   <MenuItem value={"client"}>Client</MenuItem>
                   <MenuItem value={"engineer"}>Engineer</MenuItem>
@@ -90,10 +118,10 @@ const Form = () => {
                 label="Blockchain Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.blockchainAddress}
+                name="blockchainAddress"
+                error={!!touched.blockchainAddress && !!errors.blockchainAddress}
+                helperText={touched.blockchainAddress && errors.blockchainAddress}
                 sx={{ gridColumn: "span 4" }}
               />
               <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
@@ -101,9 +129,11 @@ const Form = () => {
                 <Select
                   labelId="document-type-select"
                   id="document-type"
-                  value={document}
+                  value={values.document}
                   label="Document"
-                  onChange={handleChangesDoc}
+                  defaultValue=""
+                  name="documentType"
+                  onChange={handleChange}
                 >
                   <MenuItem value={"rfi"}>RFI</MenuItem>
                   <MenuItem value={"ipc"}>IPC</MenuItem>
@@ -115,12 +145,12 @@ const Form = () => {
                 variant="filled"
                 type="text"
                 label="Message"
+                name="message"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.message}
+                error={!!touched.message && !!errors.message}
+                helperText={touched.message && errors.message}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -143,29 +173,6 @@ const Form = () => {
       </Formik>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default Form;
