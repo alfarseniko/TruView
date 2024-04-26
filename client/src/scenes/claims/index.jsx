@@ -23,24 +23,49 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
+const checkoutSchema = yup.object().shape({
+  stakeholder: yup.string().required("required"),
+  claimtype: yup.string().required("required"),
+  fidic: yup.string().required("required"),
+  detail: yup.string().required("required"),
+});
+const initialValues = {
+  stakeholder: "",
+  claimtype: "",
+  fidic: "",
+  detail: "",
+};
+
 const Claims = () => {
-
-  const [stakeholder, setStakeHolder] = React.useState('');
-
-  const handleChangesStake = (event) => {
-    setStakeHolder(event.target.value);
-  };
-
-  const [document, setDoc] = React.useState('');
-
-  const handleChangesDoc = (event) => {
-    setDoc(event.target.value);
-  };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    try {
+      const response = await fetch('http://localhost:3001/claim', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result)
+        });
+
+      if (response.ok) {
+        // Handle successful response
+        console.log('Data sent successfully');
+        console.log("data: " + values);
+      } else {
+        // Handle error response
+        console.error('Failed to send data');
+      }
+    } catch (error) {
+      // Handle network error
+      console.error('Network error', error);
+    }
   };
 
   return (
@@ -74,9 +99,11 @@ const Claims = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={stakeholder}
+                  defaultValue=""
+                  value={values.stakeholder}
                   label="Stakeholder"
-                  onChange={handleChangesStake}
+                  name="stakeholder"
+                  onChange={handleChange}
                 >
                   <MenuItem value={"client"}>Client</MenuItem>
                   <MenuItem value={"engineer"}>Engineer</MenuItem>
@@ -87,10 +114,11 @@ const Claims = () => {
                 <InputLabel id="document-type-select">Type Of Claim</InputLabel>
                 <Select
                   labelId="document-type-select"
-                  id="document-type"
-                  value={document}
-                  label="Document"
-                  onChange={handleChangesDoc}
+                  id="claimtype"
+                  value={values.claimtype}
+                  label="claimtype"
+                  name="stakeholder"
+                  onChange={handleChange}
                 >
                   <MenuItem value={"rfi"}>Extension of Time</MenuItem>
                   <MenuItem value={"ipc"}>Constructive Change</MenuItem>
@@ -108,10 +136,10 @@ const Claims = () => {
                 label="FIDIC Clauses in Effect"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.fidic}
+                name="fidic"
+                error={!!touched.fidic && !!errors.fidic}
+                helperText={touched.fidic && errors.fidic}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -121,10 +149,10 @@ const Claims = () => {
                 label="Details"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.detail}
+                name="detail"
+                error={!!touched.detail && !!errors.detail}
+                helperText={touched.detail && errors.detail}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -139,7 +167,7 @@ const Claims = () => {
                 <VisuallyHiddenInput type="file" />
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Send Document
+                File Claim
               </Button>
             </Box>
           </form>
@@ -147,29 +175,6 @@ const Claims = () => {
       </Formik>
     </Box>
   );
-};
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
 };
 
 export default Claims;
