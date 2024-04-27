@@ -6,59 +6,66 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import axios from 'axios';
+import { useEffect, useState } from "react";
 
 const Team = () => {
+
+  const [team, setTeam] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/stakeholder')
+      .then((response) => {
+        setTeam(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  })
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
+  const columns = [{ field: "id", headerName: "ID" }, {
+    field: "name",
+    headerName: "Name",
+    flex: 1,
+    cellClassName: "name-column--cell",
+  },
+  {
+    field: "userAddress",
+    headerName: "Account Address",
+    flex: 1,
+  },
+  {
+    field: "userRole",
+    headerName: "User Role",
+    flex: 1,
+    renderCell: ({ row: { access } }) => {
+      return (
+        <Box
+          width="60%"
+          m="0 auto"
+          p="5px"
+          display="flex"
+          justifyContent="center"
+          backgroundColor={
+            access === "admin"
+              ? colors.greenAccent[600]
+              : access === "manager"
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
+          }
+          borderRadius="4px"
+        >
+          {access === "client" && <AdminPanelSettingsOutlinedIcon />}
+          {access === "engineer" && <SecurityOutlinedIcon />}
+          {access === "contractor" && <LockOpenOutlinedIcon />}
+          <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+            {access}
+          </Typography>
+        </Box>
+      );
     },
-    {
-      field: "address",
-      headerName: "Account Address",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "client" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "engineer" && <SecurityOutlinedIcon />}
-            {access === "contractor" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
-    },
+  },
   ];
 
   return (
@@ -93,7 +100,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid checkboxSelection rows={[team]} columns={columns} />
       </Box>
     </Box>
   );

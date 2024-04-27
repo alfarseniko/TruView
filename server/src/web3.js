@@ -1,6 +1,12 @@
 import { Web3 } from 'web3';
 import { create } from '@web3-storage/w3up-client'
 import ABI from './contract/ABI.json' assert { type: 'json' };
+import express, { application } from 'express';
+import cors from 'cors';
+
+const app = express();
+
+app.use(cors());
 
 const client = await create();
 
@@ -22,6 +28,14 @@ const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
 const myContract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 console.log(await web3.eth.getBalance(ADDRESS));
 //interact with the contract
-const txReceipt = await myContract.methods.getProject().call();
 
-console.log('Transaction receipt:', txReceipt);
+app.get('/api/stakeholder', async (req, res) => {
+    const txReceipt0 = await myContract.methods.getStakeHolder(0).call();
+    txReceipt0.id = 1;
+    //const txArray = Object.entries(txReceipt0).map(([name, userRole, userAddress, id]) => ({ name, userRole, userAddress, id }));
+    res.send(txReceipt0);
+})
+
+app.listen(4000, () => {
+    console.log('Server is running on port 4000');
+});
