@@ -9,7 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import axios from 'axios';
 import * as React from 'react';
+import { useEffect, useState } from "react";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -42,32 +44,14 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (values) => {
-      try {
-        const response = await fetch('http://localhost:3001/form', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result)
-        });
-
-        if (response.ok) {
-          // Handle successful response
-          console.log('Data sent successfully');
-          console.log("data: " + values);
-        } else {
-          // Handle error response
-          console.error('Failed to send data');
-        }
-      } catch (error) {
-        // Handle network error
-        console.error('Network error', error);
-      }
-    };
+    try {
+      console.log("values to submit:", values)
+      const response = await axios.post("http://localhost:4000/api/submitForm", values);
+      console.log("submitted form data:", response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box m="20px">

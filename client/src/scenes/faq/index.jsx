@@ -6,13 +6,40 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
+import axios from 'axios';
+import { useEffect, useState } from "react";
 
 const FAQ = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [formData, setFormData] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/getForm')
+      .then((response) => {
+        setFormData(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  })
+
   return (
     <Box m="20px">
       <Header title="DISPUTE MANAGEMENT" subtitle="Manage all disputes related to you" />
+
+      <Accordion defaultExpanded>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography color={colors.greenAccent[500]} variant="h5">
+            {formData.stakeholder} submitted a {formData.documentType} document
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            {formData.message}
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
 
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

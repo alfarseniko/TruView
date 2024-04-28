@@ -6,7 +6,7 @@ var cors = require('cors');
 
 var corsOptions = {
   "origin": "http://localhost:3000",
-  "credentials":true
+  "credentials": true
 }
 
 var productsRouter = require('./src/routes/form.js');
