@@ -39,7 +39,7 @@ const Team = () => {
     field: "userRole",
     headerName: "User Role",
     flex: 1,
-    renderCell: ({ row: { access } }) => {
+    renderCell: ({ row: { userRole } }) => {
       return (
         <Box
           width="60%"
@@ -48,19 +48,19 @@ const Team = () => {
           display="flex"
           justifyContent="center"
           backgroundColor={
-            access === "admin"
+            userRole === "client"
               ? colors.greenAccent[600]
-              : access === "manager"
+              : userRole === "engineer"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
           }
           borderRadius="4px"
         >
-          {access === "client" && <AdminPanelSettingsOutlinedIcon />}
-          {access === "engineer" && <SecurityOutlinedIcon />}
-          {access === "contractor" && <LockOpenOutlinedIcon />}
+          {userRole === "client" && <AdminPanelSettingsOutlinedIcon />}
+          {userRole === "engineer" && <SecurityOutlinedIcon />}
+          {userRole === "contractor" && <LockOpenOutlinedIcon />}
           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {access}
+            {userRole}
           </Typography>
         </Box>
       );
@@ -100,7 +100,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={[team]} columns={columns} />
+        <DataGrid checkboxSelection rows={team} columns={columns} />
       </Box>
     </Box>
   );

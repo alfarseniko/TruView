@@ -1,0 +1,375 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_user",
+                "type": "string"
+            }
+        ],
+        "name": "registerUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "_recipient",
+                "type": "address"
+            }
+        ],
+        "name": "sendTransaction",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_ipfsHash",
+                "type": "string"
+            }
+        ],
+        "name": "storeDocHistory",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "_txnHash",
+                "type": "bytes32"
+            }
+        ],
+        "name": "storeTxnHistory",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+            }
+        ],
+        "name": "checkRegisteredUser",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "clientAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "getDocHistory",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "signatureAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "recipientAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "ipfsHashIndex",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "timeStamp",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct TruView.DocumentData",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getProject",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "components": [
+                            {
+                                "internalType": "string",
+                                "name": "name",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "password",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "userRole",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "userAddress",
+                                "type": "address"
+                            }
+                        ],
+                        "internalType": "struct TruView.StakeHolder[]",
+                        "name": "stakeholderArray",
+                        "type": "tuple[]"
+                    },
+                    {
+                        "internalType": "bytes32[]",
+                        "name": "paymentHash",
+                        "type": "bytes32[]"
+                    },
+                    {
+                        "internalType": "string[]",
+                        "name": "documentHash",
+                        "type": "string[]"
+                    },
+                    {
+                        "components": [
+                            {
+                                "internalType": "address",
+                                "name": "signatureAddress",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "recipientAddress",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "txnHashIndex",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "timeStamp",
+                                "type": "uint256"
+                            }
+                        ],
+                        "internalType": "struct TruView.TransactionData[]",
+                        "name": "txnHistory",
+                        "type": "tuple[]"
+                    },
+                    {
+                        "components": [
+                            {
+                                "internalType": "address",
+                                "name": "signatureAddress",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "recipientAddress",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "ipfsHashIndex",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "timeStamp",
+                                "type": "uint256"
+                            }
+                        ],
+                        "internalType": "struct TruView.DocumentData[]",
+                        "name": "docHistory",
+                        "type": "tuple[]"
+                    }
+                ],
+                "internalType": "struct TruView.Project",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "getStakeHolder",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "password",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userRole",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "userAddress",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct TruView.StakeHolder",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getStakeHolderArray",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "password",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "userRole",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "userAddress",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct TruView.StakeHolder[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "getTxnHistory",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "signatureAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "recipientAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "txnHashIndex",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "timeStamp",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct TruView.TransactionData",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
