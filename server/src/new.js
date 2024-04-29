@@ -61,8 +61,11 @@ app.get('/api/stakeholder', async (req, res) => {
 app.get('/api/claims', async (req, res) => {
     const txReceipt0 = await myContract.methods.getclaimDataArray().call();
     console.log(txReceipt0);
+    claimsDataArray = txReceipt0;
     res.send(txReceipt0);
 })
+
+var claimsDataArray = [];
 
 app.post('/api/submitForm', jsonParser, async (req, res) => {
     // getting form data from frontend here
@@ -100,7 +103,7 @@ app.post('/api/submitClaim', jsonParser, async (req, res) => {
 app.get('/api/getForm', (req, res) => {
     // get form data from blockchain here
     // send it to frontend (.call())
-    res.send(formData);
+    res.send(claimsDataArray);
 })
 
 app.listen(4000, () => {

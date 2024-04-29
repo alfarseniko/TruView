@@ -96,7 +96,7 @@ const Claims = () => {
                   <MenuItem value={"Consultant"}>Consultant</MenuItem>
                   <MenuItem value={"Contractor"}>Contractor</MenuItem>
                   <MenuItem value={"Sub-Contractor"}>Sub-Contractor</MenuItem>
-                  <MenuItem value={"Contractor"}>Supplier</MenuItem>
+                  <MenuItem value={"Supplier"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
@@ -171,7 +171,7 @@ const Claims = () => {
                 <VisuallyHiddenInput type="file" />
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Send Document
+                File Claim
               </Button>
             </Box>
           </form>

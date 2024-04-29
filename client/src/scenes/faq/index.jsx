@@ -15,32 +15,19 @@ const FAQ = () => {
 
   const [formData, setFormData] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:4000/api/getForm')
+    axios.get('http://localhost:4000/api/claims')
       .then((response) => {
+        console.log(formData)
         setFormData(response.data)
       })
       .catch((error) => {
         console.log(error)
       })
-  })
+  }, [])
 
   return (
     <Box m="20px">
       <Header title="DISPUTE MANAGEMENT" subtitle="Manage all disputes related to you" />
-
-      <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography color={colors.greenAccent[500]} variant="h5">
-            {formData.stakeholder} submitted a {formData.documentType} document
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {formData.message}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography color={colors.greenAccent[500]} variant="h5">
