@@ -30,7 +30,7 @@ const ADDRESS = '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF';
 
 const PRIVATE_KEY = '0x13ecc10453330f2dc5a4a3fd8104e925df4bc0f435df572c01e37db54b856d9a';
 
-const CONTRACT_ADDRESS = '0xbA5091366a376327c54064A99ec83253FaEF9726';
+const CONTRACT_ADDRESS = '0xe960Ed2aa14d6cABdE238166E03f684f6B584609';
 
 
 const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
@@ -49,49 +49,51 @@ console.log(await web3.eth.getBalance(ADDRESS));
 
 app.get('/api/stakeholder', async (req, res) => {
     const txReceipt0 = await myContract.methods.getStakeHolderArray().call();
-    txReceipt0[0].id = 1;
-    txReceipt0[1].id = 2;
-    txReceipt0[2].id = 3;
-    txReceipt0[3].id = 4;
-    //const txArray = Object.entries(txReceipt0).map(([name, userRole, userAddress, id]) => ({ name, userRole, userAddress, id }));
+    for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < txReceipt0.length; i++) {
+            txReceipt0[i].id = i + 1
+        }
+    }
+    console.log(txReceipt0);
     res.send(txReceipt0);
 })
 
-var formData = {
-    stakeholder: "",
-    blockchainAddress: "",
-    documentType: "",
-    message: ""
-}
+app.get('/api/claims', async (req, res) => {
+    const txReceipt0 = await myContract.methods.getclaimDataArray().call();
+    console.log(txReceipt0);
+    res.send(txReceipt0);
+})
 
-var ClaimData = {
-    stakeholder: "",
-    typeOfClaim: "",
-    fidicClauses: "",
-    claimTitle: "",
-    details: ""
-}
-
-app.post('/api/submitForm', jsonParser, (req, res) => {
+app.post('/api/submitForm', jsonParser, async (req, res) => {
     // getting form data from frontend here
     // save it to blockchain (.send())
-    formData.stakeholder = req.body.stakeholder;
+    /*formData.stakeholder = req.body.stakeholder;
     formData.blockchainAddress = req.body.blockchainAddress;
     formData.documentType = req.body.documentType;
-    formData.message = req.body.message;
-    console.log("Form data received:", formData);
+    formData.message = req.body.message;*/
+    console.log("Form data received:", req.body);
     res.send("Form submitted successfully");
 })
 
-app.post('/api/submitClaim', jsonParser, (req, res) => {
+app.post('/api/submitClaim', jsonParser, async (req, res) => {
     // getting form data from frontend here
     // save it to blockchain (.send())
-    ClaimData.stakeholder = req.body.stakeholder;
+    /*ClaimData.stakeholder = req.body.stakeholder;
     ClaimData.typeOfClaim = req.body.typeOfClaim;
     ClaimData.fidicClauses = req.body.fidicClauses;
     ClaimData.claimTitle = req.body.claimTitle;
-    ClaimData.details = req.body.details;
-    console.log("Form data received:", ClaimData);
+    ClaimData.details = req.body.details;*/
+    console.log("Form data received:", req.body);
+
+    await myContract.methods.storeClaimData(
+        req.body.stakeholder,
+        req.body.typeOfClaim,
+        req.body.fidicClauses,
+        req.body.claimTitle,
+        req.body.details
+    ).send({ from: '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF' });
+    console.log("Form submitted on blockchain!")
+
     res.send("Form submitted successfully");
 })
 

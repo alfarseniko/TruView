@@ -56,9 +56,11 @@ const Team = () => {
           }
           borderRadius="4px"
         >
-          {userRole === "client" && <AdminPanelSettingsOutlinedIcon />}
-          {userRole === "engineer" && <SecurityOutlinedIcon />}
-          {userRole === "contractor" && <LockOpenOutlinedIcon />}
+          {userRole === "Client" && <AdminPanelSettingsOutlinedIcon />}
+          {userRole === "Consultant" && <SecurityOutlinedIcon />}
+          {userRole === "Contractor" && <LockOpenOutlinedIcon />}
+          {userRole === "Sub-Contractor" && <SecurityOutlinedIcon />}
+          {userRole === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
             {userRole}
           </Typography>

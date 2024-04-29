@@ -10,78 +10,6 @@
                 "internalType": "string",
                 "name": "_password",
                 "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_user",
-                "type": "string"
-            }
-        ],
-        "name": "registerUser",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address payable",
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "sendTransaction",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_recipient",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "_ipfsHash",
-                "type": "string"
-            }
-        ],
-        "name": "storeDocHistory",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_recipient",
-                "type": "address"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_txnHash",
-                "type": "bytes32"
-            }
-        ],
-        "name": "storeTxnHistory",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_password",
-                "type": "string"
             }
         ],
         "name": "checkRegisteredUser",
@@ -245,6 +173,38 @@
                         "internalType": "struct TruView.DocumentData[]",
                         "name": "docHistory",
                         "type": "tuple[]"
+                    },
+                    {
+                        "components": [
+                            {
+                                "internalType": "string",
+                                "name": "stakeholder",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "typeOfClaim",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "fidicClauses",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "claimTitle",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "details",
+                                "type": "string"
+                            }
+                        ],
+                        "internalType": "struct TruView.ClaimData[]",
+                        "name": "ClaimDataArray",
+                        "type": "tuple[]"
                     }
                 ],
                 "internalType": "struct TruView.Project",
@@ -370,6 +330,151 @@
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getclaimDataArray",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "stakeholder",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "typeOfClaim",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "fidicClauses",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "claimTitle",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "details",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct TruView.ClaimData[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_user",
+                "type": "string"
+            }
+        ],
+        "name": "registerUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "_recipient",
+                "type": "address"
+            }
+        ],
+        "name": "sendTransaction",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_stakeholder",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_typeOfClaim",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_fidicClauses",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_claimTitle",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_details",
+                "type": "string"
+            }
+        ],
+        "name": "storeClaimData",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_ipfsHash",
+                "type": "string"
+            }
+        ],
+        "name": "storeDocHistory",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_recipient",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "_txnHash",
+                "type": "bytes32"
+            }
+        ],
+        "name": "storeTxnHistory",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]
