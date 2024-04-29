@@ -90,9 +90,11 @@ const Form = () => {
                   name="stakeholder"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"client"}>Client</MenuItem>
-                  <MenuItem value={"engineer"}>Engineer</MenuItem>
-                  <MenuItem value={"contractor"}>Contractor</MenuItem>
+                  <MenuItem value={"Client"}>Client</MenuItem>
+                  <MenuItem value={"Consultant"}>Consultant</MenuItem>
+                  <MenuItem value={"Contractor"}>Contractor</MenuItem>
+                  <MenuItem value={"Sub-Contractor"}>Sub-Contractor</MenuItem>
+                  <MenuItem value={"Contractor"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -119,9 +121,17 @@ const Form = () => {
                   name="documentType"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"rfi"}>RFI</MenuItem>
-                  <MenuItem value={"ipc"}>IPC</MenuItem>
-                  <MenuItem value={"drawing"}>Drawing</MenuItem>
+                  <MenuItem value={"BIM Model"}>BIM Model</MenuItem>
+                  <MenuItem value={"Request For Information"}>Request For Information</MenuItem>
+                  <MenuItem value={"Interim Payment Certificate"}>Interim Payment Certificate</MenuItem>
+                  <MenuItem value={"Specifications"}>Specifications</MenuItem>
+                  <MenuItem value={"Drawings"}>Drawings</MenuItem>
+                  <MenuItem value={"Bill Of Quantities"}>Bill Of Quantities</MenuItem>
+                  <MenuItem value={"Schedule"}>Schedule</MenuItem>
+                  <MenuItem value={"Change Request"}>Change Request</MenuItem>
+                  <MenuItem value={"Change Order"}>Change Order</MenuItem>
+                  <MenuItem value={"Daily Report"}>Daily Report</MenuItem>
+                  <MenuItem value={"Safety Report"}>Safety Report</MenuItem>
                 </Select>
               </FormControl>
               <TextField

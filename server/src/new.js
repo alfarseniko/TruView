@@ -64,6 +64,14 @@ var formData = {
     message: ""
 }
 
+var ClaimData = {
+    stakeholder: "",
+    typeOfClaim: "",
+    fidicClauses: "",
+    claimTitle: "",
+    details: ""
+}
+
 app.post('/api/submitForm', jsonParser, (req, res) => {
     // getting form data from frontend here
     // save it to blockchain (.send())
@@ -72,6 +80,18 @@ app.post('/api/submitForm', jsonParser, (req, res) => {
     formData.documentType = req.body.documentType;
     formData.message = req.body.message;
     console.log("Form data received:", formData);
+    res.send("Form submitted successfully");
+})
+
+app.post('/api/submitClaim', jsonParser, (req, res) => {
+    // getting form data from frontend here
+    // save it to blockchain (.send())
+    ClaimData.stakeholder = req.body.stakeholder;
+    ClaimData.typeOfClaim = req.body.typeOfClaim;
+    ClaimData.fidicClauses = req.body.fidicClauses;
+    ClaimData.claimTitle = req.body.claimTitle;
+    ClaimData.details = req.body.details;
+    console.log("Form data received:", ClaimData);
     res.send("Form submitted successfully");
 })
 

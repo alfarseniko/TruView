@@ -9,7 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import axios from 'axios';
 import * as React from 'react';
+import { useEffect, useState } from "react";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -25,15 +27,18 @@ const VisuallyHiddenInput = styled('input')({
 
 const checkoutSchema = yup.object().shape({
   stakeholder: yup.string().required("required"),
-  claimtype: yup.string().required("required"),
-  fidic: yup.string().required("required"),
-  detail: yup.string().required("required"),
+  typeOfClaim: yup.string().required("required"),
+  fidicClauses: yup.string().required("required"),
+  details: yup.string().required("required"),
+  claimTitle: yup.string().required("required"),
 });
+
 const initialValues = {
   stakeholder: "",
-  claimtype: "",
-  fidic: "",
-  detail: "",
+  typeOfClaim: "",
+  fidicClauses: "",
+  details: "",
+  claimTitle: "",
 };
 
 const Claims = () => {
@@ -42,35 +47,17 @@ const Claims = () => {
 
   const handleFormSubmit = async (values) => {
     try {
-      const response = await fetch('http://localhost:3001/claim', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result)
-        });
-
-      if (response.ok) {
-        // Handle successful response
-        console.log('Data sent successfully');
-        console.log("data: " + values);
-      } else {
-        // Handle error response
-        console.error('Failed to send data');
-      }
+      console.log("values to submit:", values)
+      const response = await axios.post("http://localhost:4000/api/submitClaim", values);
+      console.log("submitted form data:", response);
     } catch (error) {
-      // Handle network error
-      console.error('Network error', error);
+      console.log(error);
     }
   };
 
   return (
     <Box m="20px">
-      <Header title="CLAIMS MANAGEMENT" subtitle="File a claim against other stakeholders" />
+      <Header title="CLAIMS MANAGER" subtitle="File a claim against other stakeholders!" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -105,54 +92,71 @@ const Claims = () => {
                   name="stakeholder"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"client"}>Client</MenuItem>
-                  <MenuItem value={"engineer"}>Engineer</MenuItem>
-                  <MenuItem value={"contractor"}>Contractor</MenuItem>
+                  <MenuItem value={"Client"}>Client</MenuItem>
+                  <MenuItem value={"Consultant"}>Consultant</MenuItem>
+                  <MenuItem value={"Contractor"}>Contractor</MenuItem>
+                  <MenuItem value={"Sub-Contractor"}>Sub-Contractor</MenuItem>
+                  <MenuItem value={"Contractor"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
-                <InputLabel id="document-type-select">Type Of Claim</InputLabel>
+                <InputLabel id="claim-type-select">Type of Claim</InputLabel>
                 <Select
-                  labelId="document-type-select"
-                  id="claimtype"
-                  value={values.claimtype}
-                  label="claimtype"
-                  name="stakeholder"
+                  labelId="claim-type-select"
+                  id="claim-type"
+                  value={values.typeOfClaim}
+                  label="Type of Claim"
+                  defaultValue=""
+                  name="typeOfClaim"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"rfi"}>Extension of Time</MenuItem>
-                  <MenuItem value={"ipc"}>Constructive Change</MenuItem>
-                  <MenuItem value={"drawing"}>Liquidated Damages</MenuItem>
-                  <MenuItem value={"drawing"}>Improper Notice</MenuItem>
-                  <MenuItem value={"drawing"}>Disruption</MenuItem>
-                  <MenuItem value={"drawing"}>Escalation Cost</MenuItem>
-                  <MenuItem value={"drawing"}>Termination</MenuItem>
+                  <MenuItem value={"Extension of Time"}>Extension of Time</MenuItem>
+                  <MenuItem value={"Constructive Change"}>Constructive Change</MenuItem>
+                  <MenuItem value={"Liquidated Damages"}>Liquidated Damages</MenuItem>
+                  <MenuItem value={"Improper Notice"}>Improper Notice</MenuItem>
+                  <MenuItem value={"Disruption"}>Disruption</MenuItem>
+                  <MenuItem value={"Escalation Cost"}>Escalation Cost</MenuItem>
+                  <MenuItem value={"Termination"}>Termination</MenuItem>
+                  <MenuItem value={"Unforeseen Site Conditions"}>Unforeseen Site Conditions</MenuItem>
                 </Select>
               </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="FIDIC Clauses in Effect"
+                label="FIDIC Clauses Violated"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.fidic}
-                name="fidic"
-                error={!!touched.fidic && !!errors.fidic}
-                helperText={touched.fidic && errors.fidic}
+                value={values.fidicClauses}
+                name="fidicClauses"
+                error={!!touched.fidicClauses && !!errors.fidicClauses}
+                helperText={touched.fidicClauses && errors.fidicClauses}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Details"
+                label="Title of Claim Message"
+                name="claimTitle"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.detail}
-                name="detail"
-                error={!!touched.detail && !!errors.detail}
-                helperText={touched.detail && errors.detail}
+                value={values.claimTitle}
+                error={!!touched.claimTitle && !!errors.claimTitle}
+                helperText={touched.claimTitle && errors.claimTitle}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Details of Claim"
+                name="details"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.details}
+                error={!!touched.details && !!errors.details}
+                helperText={touched.details && errors.details}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
@@ -167,7 +171,7 @@ const Claims = () => {
                 <VisuallyHiddenInput type="file" />
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                File Claim
+                Send Document
               </Button>
             </Box>
           </form>
