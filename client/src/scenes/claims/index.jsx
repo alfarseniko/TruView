@@ -161,15 +161,6 @@ const Claims = () => {
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}>
-                Upload file
-                <VisuallyHiddenInput type="file" />
-              </Button>
               <Button type="submit" color="secondary" variant="contained">
                 File Claim
               </Button>

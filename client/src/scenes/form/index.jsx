@@ -134,19 +134,6 @@ const Form = () => {
                   <MenuItem value={"Safety Report"}>Safety Report</MenuItem>
                 </Select>
               </FormControl>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Message"
-                name="message"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.message}
-                error={!!touched.message && !!errors.message}
-                helperText={touched.message && errors.message}
-                sx={{ gridColumn: "span 4" }}
-              />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button

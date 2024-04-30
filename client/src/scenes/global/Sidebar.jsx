@@ -12,6 +12,9 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import GavelIcon from '@mui/icons-material/Gavel';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -103,7 +106,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Civil Engineer
+                  Consultant
                 </Typography>
 
               </Box>
@@ -146,51 +149,58 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Project Management
+              Document Management
             </Typography>
             <Item
-              title="Documents Manager"
+              title="Documents Sender"
               to="/form"
-              icon={<PersonOutlinedIcon />}
+              icon={<DriveFileMoveIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Tasks Manager"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+              title="Document Ledger"
+              to="/ledger"
+              icon={<LibraryBooksIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Dispute Management
+            </Typography>
             <Item
-              title="Claims Management"
+              title="Claims Filer"
               to="/claims"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Dispute Management"
+              title="Dispute Ledger"
               to="/faq"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            {/* <Typography
+            <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              BIM Viewer
+              Arbitration Management
             </Typography>
             <Item
-              title="3D Viewer"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
+              title="Arbitrator's Ledger"
+              to="/arbitrator"
+              icon={<GavelIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            />
           </Box>
         </Menu>
       </ProSidebar>

@@ -12,10 +12,12 @@ import Claims from "./scenes/claims";
 import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import FAQ from "./scenes/faq";
+import Ledger from "./scenes/ledger";
 import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import Arbitrator from "./scenes/arbitrator";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -42,6 +44,8 @@ function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
+              <Route path="/ledger" element={<Ledger />} />
+              <Route path="/arbitrator" element={<Arbitrator />} />
             </Routes>
           </main>
         </div>
