@@ -12,6 +12,7 @@
     "files-from-path": "^1.0.4",
     "fs": "^0.0.1-security",
     "helia": "^4.1.2",
+    "ipfs": "^0.66.1",
     "kubo-rpc-client": "^4.1.1",
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",

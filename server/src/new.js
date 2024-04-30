@@ -6,6 +6,7 @@ import fs from 'fs';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import * as IPFS from 'ipfs';
 
 // either this
 // import newABI from './contract/newABI.json' assert { type: 'json' }
@@ -31,7 +32,6 @@ const ADDRESS = '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF';
 const PRIVATE_KEY = '0x13ecc10453330f2dc5a4a3fd8104e925df4bc0f435df572c01e37db54b856d9a';
 
 const CONTRACT_ADDRESS = '0xc8ac81C6A868b495285fD1b8D05C4c893c8Be19a';
-
 
 const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
 
@@ -74,8 +74,20 @@ app.post('/api/submitForm', jsonParser, async (req, res) => {
 
     // generate IPFS CID from file
     const file = req.body.filename;
-    const cid = "";
-    console.log("File sent to IPFS. CID received is:", cid);
+
+    const node = await IPFS.create();
+    const version = await node.version();
+
+    console.log("Version:", version.version);
+
+    const fileAdded = await node.add({
+        path: file,
+        content: "DESCRIPTION",
+    });
+
+    const cid = fileAdded.cid;
+
+    console.log("Added file:", fileAdded.path, cid);
 
     // upload stakeholder, blockchainAddress, documentType, CID to blockchain
     // await myContract.methods.storeFormData(
