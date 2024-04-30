@@ -58,6 +58,8 @@ app.get('/api/stakeholder', async (req, res) => {
     res.send(txReceipt0);
 })
 
+var claimsDataArray = [];
+
 app.get('/api/claims', async (req, res) => {
     const txReceipt0 = await myContract.methods.getclaimDataArray().call();
     console.log(txReceipt0);
@@ -65,16 +67,26 @@ app.get('/api/claims', async (req, res) => {
     res.send(txReceipt0);
 })
 
-var claimsDataArray = [];
-
 app.post('/api/submitForm', jsonParser, async (req, res) => {
     // getting form data from frontend here
     // save it to blockchain (.send())
-    /*formData.stakeholder = req.body.stakeholder;
-    formData.blockchainAddress = req.body.blockchainAddress;
-    formData.documentType = req.body.documentType;
-    formData.message = req.body.message;*/
     console.log("Form data received:", req.body);
+
+    // generate IPFS CID from file
+    const file = req.body.filename;
+    const cid = "";
+    console.log("File sent to IPFS. CID received is:", cid);
+
+    // upload stakeholder, blockchainAddress, documentType, CID to blockchain
+    // await myContract.methods.storeFormData(
+    //     req.body.stakeholder,
+    //     req.body.blockchainAddress,
+    //     req.body.documentType,
+    //     cid
+    // ).send({ from: '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF' });
+
+    // console.log("Form submitted on blockchain!")
+
     res.send("Form submitted successfully");
 })
 

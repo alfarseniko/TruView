@@ -2,7 +2,12 @@ import { create } from '@web3-storage/w3up-client';
 import { UploadClient } from '@web3-storage/w3up-client/client';
 import * as fs from 'node:fs';
 import * as readline from 'node:readline';
+// import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { createHelia } from 'helia';
+import { unixfs } from '@helia/unixfs';
 
+// create a Helia node
+const helia = await createHelia()
 
 const client = await create();
 

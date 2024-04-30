@@ -3,25 +3,25 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import axios from 'axios';
-import * as React from 'react';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import axios from "axios";
+import * as React from "react";
 import { useEffect, useState } from "react";
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 0,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
@@ -29,33 +29,45 @@ const checkoutSchema = yup.object().shape({
   stakeholder: yup.string().required("required"),
   blockchainAddress: yup.string().required("required"),
   documentType: yup.string().required("required"),
-  message: yup.string().required("required"),
 });
 
 const initialValues = {
   stakeholder: "",
   blockchainAddress: "",
   documentType: "",
-  message: "",
 };
 
 const Form = () => {
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFormSubmit = async (values) => {
+    values["filename"] = selectedFile;
     try {
-      console.log("values to submit:", values)
-      const response = await axios.post("http://localhost:4000/api/submitForm", values);
+      console.log("values to submit:", values);
+      const response = await axios.post(
+        "http://localhost:4000/api/submitForm",
+        values
+      );
       console.log("submitted form data:", response);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const fileName = file.name;
+    setSelectedFile(fileName);
+    console.log("File name:", fileName);
+  };
+
   return (
     <Box m="20px">
-      <Header title="DOCUMENTS MANAGER" subtitle="Send documents to other stakeholders!" />
+      <Header
+        title="DOCUMENTS MANAGER"
+        subtitle="Send documents to other stakeholders!"
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -80,7 +92,9 @@ const Form = () => {
               }}
             >
               <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
-                <InputLabel id="demo-simple-select-label">Stakeholder</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Stakeholder
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -106,8 +120,12 @@ const Form = () => {
                 onChange={handleChange}
                 value={values.blockchainAddress}
                 name="blockchainAddress"
-                error={!!touched.blockchainAddress && !!errors.blockchainAddress}
-                helperText={touched.blockchainAddress && errors.blockchainAddress}
+                error={
+                  !!touched.blockchainAddress && !!errors.blockchainAddress
+                }
+                helperText={
+                  touched.blockchainAddress && errors.blockchainAddress
+                }
                 sx={{ gridColumn: "span 4" }}
               />
               <FormControl fullWidth sx={{ gridColumn: "span 4" }}>
@@ -122,11 +140,17 @@ const Form = () => {
                   onChange={handleChange}
                 >
                   <MenuItem value={"BIM Model"}>BIM Model</MenuItem>
-                  <MenuItem value={"Request For Information"}>Request For Information</MenuItem>
-                  <MenuItem value={"Interim Payment Certificate"}>Interim Payment Certificate</MenuItem>
+                  <MenuItem value={"Request For Information"}>
+                    Request For Information
+                  </MenuItem>
+                  <MenuItem value={"Interim Payment Certificate"}>
+                    Interim Payment Certificate
+                  </MenuItem>
                   <MenuItem value={"Specifications"}>Specifications</MenuItem>
                   <MenuItem value={"Drawings"}>Drawings</MenuItem>
-                  <MenuItem value={"Bill Of Quantities"}>Bill Of Quantities</MenuItem>
+                  <MenuItem value={"Bill Of Quantities"}>
+                    Bill Of Quantities
+                  </MenuItem>
                   <MenuItem value={"Schedule"}>Schedule</MenuItem>
                   <MenuItem value={"Change Request"}>Change Request</MenuItem>
                   <MenuItem value={"Change Order"}>Change Order</MenuItem>
@@ -136,15 +160,24 @@ const Form = () => {
               </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}>
-                Upload file
-                <VisuallyHiddenInput type="file" />
-              </Button>
+              <label htmlFor="file-input">
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload File
+                  <input
+                    id="file-input"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <VisuallyHiddenInput type="file" />
+                </Button>
+              </label>
               <Button type="submit" color="secondary" variant="contained">
                 Send Document
               </Button>
