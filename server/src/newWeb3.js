@@ -62,13 +62,22 @@ app.get('/api/claims', async (req, res) => {
     const txReceipt0 = await myContract.methods.getclaimDataArray().call();
     console.log(txReceipt0);
     claimsDataArray = txReceipt0;
+
     res.send(txReceipt0);
 })
 
 app.get('/api/consultantData', async (req, res) => {
     const txReceipt0 = await myContract.methods.getConsultantArray().call();
-    console.log(txReceipt0);
     claimsDataArray = txReceipt0;
+
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = txReceipt0[i].timestamp.toString();
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+
+    console.log(txReceipt0);
+
     res.send(txReceipt0);
 })
 
