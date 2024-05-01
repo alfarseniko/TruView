@@ -34,6 +34,11 @@ const Ledger = () => {
     field: "ipfs",
     headerName: "IPFS Link",
     flex: 1,
+    renderCell: (row) => {
+      return (
+        <a href={ledger[row.id - 1].link} target="_blank" rel="noreferrer">{`${ledger[row.id - 1].ipfs}`}</a>
+      )
+    },
   },
   {
     field: "timestamp",

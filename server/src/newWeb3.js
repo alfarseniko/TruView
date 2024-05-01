@@ -38,7 +38,7 @@ app.use(cors(corsOption));
 
 //INITIATE THE CONTRACT ADDRESS
 const myContract = new web3.eth.Contract(newABI, CONTRACT_ADDRESS);
-console.log(await web3.eth.getBalance(ADDRESS));
+// console.log(await web3.eth.getBalance(ADDRESS));
 
 //SENDING STAKEHOLDER DATA TO THE FRONTEND
 app.get('/api/stakeholder', async (req, res) => {
@@ -48,11 +48,28 @@ app.get('/api/stakeholder', async (req, res) => {
             txReceipt0[i].id = i + 1
         }
     }
-    console.log(txReceipt0);
+    // console.log(txReceipt0);
     res.send(txReceipt0);
 })
 
-//SENDING CONSULTANT DATA TO FRONTEND
+var claimsDataArray = [];
+
+var ipfsLinks = {
+    "BIM Model": "https://bafybeih4x7dv24na2lzdagczjb6iwnd2tsakebw4oqsom3lesctqkntiyq.ipfs.w3s.link",
+    "Request For Information": "https://bafybeiczdhmljkbxmvdeywpglje3xq3eitt65a7glpkt5u4xfp3aovr3hm.ipfs.w3s.link",
+    "Interim Payment Certificate": "https://bafybeih6yuoj73qxstjbwaan6et4viniaetto2dp4xsod6ynag44pthbmq.ipfs.w3s.link",
+    "Specifications": "https://bafybeicnxa54zf5ttzlpfgqudhlzfy4xeh5zavcaogscoqqyxauc4gg3di.ipfs.w3s.link",
+    "Drawings": "https://bafybeicx7rgqefkjyh6wk34tgr37tbwmvx5mehmtdetiyszsaktlpqwguy.ipfs.w3s.link",
+    "Bill Of Quantities": "https://bafybeifmoi5e5k3yivrh7v322bih425rvoi2lxxnpcqr2ntmswmjoabwye.ipfs.w3s.link",
+    "Schedule": "https://bafybeiannm6rluw3mtdq4w4v5y24yrw6wbmyjltbnc7iz7tub3k7iopz4e.ipfs.w3s.link",
+    "Change Request": "https://bafybeibcmg2eicgt3dvzq3wshrs4zk5jxp7h2luxmr4ch6v77cypc2gxrq.ipfs.w3s.link",
+    "Change Order": "https://bafybeihivrkwy6t5eybfer4fyrbvimezszap4oyeswj576hbydmwi4rq6q.ipfs.w3s.link",
+    "Daily Report": "https://bafybeicvxzi3dmoxmum2dcbcykp72dabrg4tpfrcn6oska57wrvdu3szoi.ipfs.w3s.link",
+    "Safety Report": "https://bafybeidoj4kyk2n6h5pbjz3vwydrmim7ejca7lpyqadq7rvkdy4zifify4.ipfs.w3s.link/",
+
+};
+
+// SENDING CONSULTANT DATA TO FRONTEND
 app.get('/api/consultantData', async (req, res) => {
     const txReceipt0 = await myContract.methods.getConsultantArray().call();
     claimsDataArray = txReceipt0;
@@ -71,6 +88,14 @@ app.get('/api/consultantData', async (req, res) => {
         for (let i = 0; i < txReceipt0.length; i++) {
             txReceipt0[i].id = i + 1
         }
+    }
+
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let obj = txReceipt0[i];
+        let link = ipfsLinks[obj.documentType];
+        obj["link"] = link;
+        obj["5"] = link;
+        obj["__length__"] += 1;
     }
 
     console.log(txReceipt0);
@@ -98,7 +123,15 @@ app.get('/api/receivedDocsByConsultant', async (req, res) => {
         }
     }
 
-    console.log(txReceipt0);
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let obj = txReceipt0[i];
+        let link = ipfsLinks[obj.documentType];
+        obj["link"] = link;
+        obj["5"] = link;
+        obj["__length__"] += 1;
+    }
+
+    // console.log(txReceipt0);
 
     res.send(txReceipt0);
 })
@@ -123,7 +156,15 @@ app.get('/api/receivedDocsByContractor', async (req, res) => {
         }
     }
 
-    console.log(txReceipt0);
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let obj = txReceipt0[i];
+        let link = ipfsLinks[obj.documentType];
+        obj["link"] = link;
+        obj["5"] = link;
+        obj["__length__"] += 1;
+    }
+
+    // console.log(txReceipt0);
 
     res.send(txReceipt0);
 })
@@ -131,7 +172,7 @@ app.get('/api/receivedDocsByContractor', async (req, res) => {
 //SENDING CLAIM DATA TO FRONTEND
 app.get('/api/claims', async (req, res) => {
     const txReceipt0 = await myContract.methods.getclaimDataArray().call();
-    console.log(txReceipt0);
+    // console.log(txReceipt0);
     claimsDataArray = txReceipt0;
     for (let i = 0; i < 1; i++) {
         for (let i = 0; i < txReceipt0.length; i++) {
@@ -160,26 +201,19 @@ app.get('/api/arbitratorData', async (req, res) => {
             txReceipt0[i].id = i + 1
         }
     }
+    
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let obj = txReceipt0[i];
+        let link = ipfsLinks[obj.documentType];
+        obj["link"] = link;
+        obj["5"] = link;
+        obj["__length__"] += 1;
+    }
 
-    console.log(txReceipt0);
+    // console.log(txReceipt0);
 
     res.send(txReceipt0);
 })
-
-var ipfsLinks = {
-    "BIM Model": "https://bafybeih4x7dv24na2lzdagczjb6iwnd2tsakebw4oqsom3lesctqkntiyq.ipfs.w3s.link",
-    "Request For Information": "https://bafybeiczdhmljkbxmvdeywpglje3xq3eitt65a7glpkt5u4xfp3aovr3hm.ipfs.w3s.link",
-    "Interim Payment Certificate": "https://bafybeih6yuoj73qxstjbwaan6et4viniaetto2dp4xsod6ynag44pthbmq.ipfs.w3s.link",
-    "Specifications": "https://bafybeicnxa54zf5ttzlpfgqudhlzfy4xeh5zavcaogscoqqyxauc4gg3di.ipfs.w3s.link",
-    "Drawings": "https://bafybeicx7rgqefkjyh6wk34tgr37tbwmvx5mehmtdetiyszsaktlpqwguy.ipfs.w3s.link",
-    "Bill Of Quantities": "https://bafybeifmoi5e5k3yivrh7v322bih425rvoi2lxxnpcqr2ntmswmjoabwye.ipfs.w3s.link",
-    "Schedule": "https://bafybeiannm6rluw3mtdq4w4v5y24yrw6wbmyjltbnc7iz7tub3k7iopz4e.ipfs.w3s.link",
-    "Change Request": "https://bafybeibcmg2eicgt3dvzq3wshrs4zk5jxp7h2luxmr4ch6v77cypc2gxrq.ipfs.w3s.link",
-    "Change Order": "https://bafybeihivrkwy6t5eybfer4fyrbvimezszap4oyeswj576hbydmwi4rq6q.ipfs.w3s.link",
-    "Daily Report": "https://bafybeicvxzi3dmoxmum2dcbcykp72dabrg4tpfrcn6oska57wrvdu3szoi.ipfs.w3s.link",
-    "Safety Report": "https://bafybeidoj4kyk2n6h5pbjz3vwydrmim7ejca7lpyqadq7rvkdy4zifify4.ipfs.w3s.link/",
-
-};
 
 //GETTING DOCUMENT FORM FROM FRONTEND
 app.post('/api/submitForm', jsonParser, async (req, res) => {
@@ -210,9 +244,9 @@ app.post('/api/submitForm', jsonParser, async (req, res) => {
         req.body.blockchainAddress
     ).send({ from: '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF' });
 
-    console.log("Form submitted on blockchain!")
+    // console.log("Form submitted on blockchain!")
 
-    console.log("Form data received:", req.body);
+    // console.log("Form data received:", req.body);
     res.send("Form submitted successfully");
 })
 
@@ -220,7 +254,7 @@ app.post('/api/submitForm', jsonParser, async (req, res) => {
 app.post('/api/submitClaim', jsonParser, async (req, res) => {
     // getting form data from frontend here
     // save it to blockchain (.send())
-    console.log("Form data received:", req.body);
+    // console.log("Form data received:", req.body);
 
     await myContract.methods.storeClaimData(
         req.body.stakeholder,
@@ -251,6 +285,6 @@ function timestampConv(_timestamp) {
     const timestamp = parseInt(_timestamp, 10);
     const date = new Date(timestamp * 1000);
     const formattedDate = date.toLocaleString(); // This will format the date and time according to the user's locale
-    console.log(formattedDate);
+    // console.log(formattedDate);
     return formattedDate;
 }

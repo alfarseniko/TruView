@@ -34,6 +34,11 @@ const Arbitrator = () => {
     field: "ipfs",
     headerName: "IPFS Link",
     flex: 1,
+    renderCell: (row) => {
+      return (
+        <a href={arbitrator[row.id - 1].link} target="_blank" rel="noreferrer">{`${arbitrator[row.id - 1].ipfs}`}</a>
+      )
+    },
   },
   {
     field: "timestamp",
