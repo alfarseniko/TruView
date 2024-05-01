@@ -159,8 +159,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Document Ledger"
+              title="Sent Documents"
               to="/ledger"
+              icon={<LibraryBooksIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Received Documents"
+              to="/received"
               icon={<LibraryBooksIcon />}
               selected={selected}
               setSelected={setSelected}

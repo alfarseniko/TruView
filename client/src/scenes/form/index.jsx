@@ -108,7 +108,7 @@ const Form = () => {
                   <MenuItem value={"Consultant"}>Consultant</MenuItem>
                   <MenuItem value={"Contractor"}>Contractor</MenuItem>
                   <MenuItem value={"Sub-Contractor"}>Sub-Contractor</MenuItem>
-                  <MenuItem value={"Contractor"}>Supplier</MenuItem>
+                  <MenuItem value={"Supplier"}>Supplier</MenuItem>
                 </Select>
               </FormControl>
               <TextField

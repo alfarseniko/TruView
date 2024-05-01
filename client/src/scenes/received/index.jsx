@@ -9,11 +9,11 @@ import Header from "../../components/Header";
 import axios from 'axios';
 import { useEffect, useState } from "react";
 
-const Ledger = () => {
+const Received = () => {
 
   const [ledger, setLedger] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:4000/api/consultantData')
+    axios.get('http://localhost:4000/api/receivedDocsByConsultant')
       .then((response) => {
         setLedger(response.data)
       })
@@ -42,9 +42,9 @@ const Ledger = () => {
   },
   {
     field: "receivedBy",
-    headerName: "Received By",
+    headerName: "Sent By",
     flex: 1,
-    renderCell: ({ row: { receivedBy } }) => {
+    renderCell: ({ row: { sentBy } }) => {
       return (
         <Box
           width="60%"
@@ -53,21 +53,21 @@ const Ledger = () => {
           display="flex"
           justifyContent="center"
           backgroundColor={
-            receivedBy === "Client"
+            sentBy === "Client"
               ? colors.greenAccent[600]
-              : receivedBy === "Consultant"
+              : sentBy === "Consultant"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
           }
           borderRadius="4px"
         >
-          {receivedBy === "Client" && <AdminPanelSettingsOutlinedIcon />}
-          {receivedBy === "Consultant" && <SecurityOutlinedIcon />}
-          {receivedBy === "Contractor" && <LockOpenOutlinedIcon />}
-          {receivedBy === "Sub-Contractor" && <SecurityOutlinedIcon />}
-          {receivedBy === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
+          {sentBy === "Client" && <AdminPanelSettingsOutlinedIcon />}
+          {sentBy === "Consultant" && <SecurityOutlinedIcon />}
+          {sentBy === "Contractor" && <LockOpenOutlinedIcon />}
+          {sentBy === "Sub-Contractor" && <SecurityOutlinedIcon />}
+          {sentBy === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {receivedBy}
+            {sentBy}
           </Typography>
         </Box>
       );
@@ -77,7 +77,7 @@ const Ledger = () => {
 
   return (
     <Box m="20px">
-      <Header title="DOCUMENTS SENT" subtitle="See all documents sent by you" />
+      <Header title="DOCUMENTS RECEIVED" subtitle="See all documents received by you" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -113,7 +113,7 @@ const Ledger = () => {
   );
 };
 
-export default Ledger;
+export default Received;
 
 /* line 103 is library 
     mockDataTeam is an object/array

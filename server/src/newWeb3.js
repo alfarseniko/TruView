@@ -25,7 +25,7 @@ const httpProvider = new Web3.providers.HttpProvider(alchemyUrl);
 const web3 = new Web3(httpProvider);
 const ADDRESS = '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF';
 const PRIVATE_KEY = '0x13ecc10453330f2dc5a4a3fd8104e925df4bc0f435df572c01e37db54b856d9a';
-const CONTRACT_ADDRESS = '0x8741701BC080BF3feB6D5BAE4bf7ee3Ad06501E5';
+const CONTRACT_ADDRESS = '0xDc67F9136b1B040440826429515a24C45eAd127c';
 const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
 
 //using CORS to allow cross-origin requests
@@ -56,6 +56,56 @@ app.get('/api/stakeholder', async (req, res) => {
 app.get('/api/consultantData', async (req, res) => {
     const txReceipt0 = await myContract.methods.getConsultantArray().call();
     claimsDataArray = txReceipt0;
+
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = txReceipt0[i].timestamp.toString();
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = timestampConv(txReceipt0[i].timestamp)
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+    for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < txReceipt0.length; i++) {
+            txReceipt0[i].id = i + 1
+        }
+    }
+
+    console.log(txReceipt0);
+
+    res.send(txReceipt0);
+})
+
+//SENDING RECEIVED BY CONSULTANT DOCS DATA TO FRONTEND
+app.get('/api/receivedDocsByConsultant', async (req, res) => {
+    const txReceipt0 = await myContract.methods.getSentConsultantDocsArray().call();
+
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = txReceipt0[i].timestamp.toString();
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = timestampConv(txReceipt0[i].timestamp)
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+    for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < txReceipt0.length; i++) {
+            txReceipt0[i].id = i + 1
+        }
+    }
+
+    console.log(txReceipt0);
+
+    res.send(txReceipt0);
+})
+
+//SENDING RECEIVED BY CONTRACTOR DOCS DATA TO FRONTEND
+app.get('/api/receivedDocsByContractor', async (req, res) => {
+    const txReceipt0 = await myContract.methods.getSentContractorDocsArray().call();
 
     for (let i = 0; i < txReceipt0.length; i++) {
         let converted = txReceipt0[i].timestamp.toString();
@@ -132,6 +182,14 @@ app.post('/api/submitForm', jsonParser, async (req, res) => {
     ).send({ from: '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF' });
     //storing in ArbitratorData
     await myContract.methods.storeArbitratorDocs(
+        req.body.documentType,
+        req.body.filename,
+        req.body.stakeholder,
+        "Consultant",  // Change to "Contractor" in the other version
+        req.body.blockchainAddress
+    ).send({ from: '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF' });
+    //sending data to consultant/contractor
+    await myContract.methods.storeDocsSent(
         req.body.documentType,
         req.body.filename,
         req.body.stakeholder,

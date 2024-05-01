@@ -19,6 +19,7 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Arbitrator from "./scenes/arbitrator";
 import Dispute from "./scenes/dispute";
+import Received from "./scenes/received";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -48,6 +49,7 @@ function App() {
               <Route path="/ledger" element={<Ledger />} />
               <Route path="/arbitrator" element={<Arbitrator />} />
               <Route path="/dispute" element={<Dispute />} />
+              <Route path="/received" element={<Received />} />
             </Routes>
           </main>
         </div>
