@@ -166,7 +166,20 @@ app.get('/api/arbitratorData', async (req, res) => {
     res.send(txReceipt0);
 })
 
-var claimsDataArray = [];
+var ipfsLinks = {
+    "BIM Model": "https://bafybeih4x7dv24na2lzdagczjb6iwnd2tsakebw4oqsom3lesctqkntiyq.ipfs.w3s.link",
+    "Request For Information": "https://bafybeiczdhmljkbxmvdeywpglje3xq3eitt65a7glpkt5u4xfp3aovr3hm.ipfs.w3s.link",
+    "Interim Payment Certificate": "https://bafybeih6yuoj73qxstjbwaan6et4viniaetto2dp4xsod6ynag44pthbmq.ipfs.w3s.link",
+    "Specifications": "https://bafybeicnxa54zf5ttzlpfgqudhlzfy4xeh5zavcaogscoqqyxauc4gg3di.ipfs.w3s.link",
+    "Drawings": "https://bafybeicx7rgqefkjyh6wk34tgr37tbwmvx5mehmtdetiyszsaktlpqwguy.ipfs.w3s.link",
+    "Bill Of Quantities": "https://bafybeifmoi5e5k3yivrh7v322bih425rvoi2lxxnpcqr2ntmswmjoabwye.ipfs.w3s.link",
+    "Schedule": "https://bafybeiannm6rluw3mtdq4w4v5y24yrw6wbmyjltbnc7iz7tub3k7iopz4e.ipfs.w3s.link",
+    "Change Request": "https://bafybeibcmg2eicgt3dvzq3wshrs4zk5jxp7h2luxmr4ch6v77cypc2gxrq.ipfs.w3s.link",
+    "Change Order": "https://bafybeihivrkwy6t5eybfer4fyrbvimezszap4oyeswj576hbydmwi4rq6q.ipfs.w3s.link",
+    "Daily Report": "https://bafybeicvxzi3dmoxmum2dcbcykp72dabrg4tpfrcn6oska57wrvdu3szoi.ipfs.w3s.link",
+    "Safety Report": "https://bafybeidoj4kyk2n6h5pbjz3vwydrmim7ejca7lpyqadq7rvkdy4zifify4.ipfs.w3s.link/",
+
+};
 
 //GETTING DOCUMENT FORM FROM FRONTEND
 app.post('/api/submitForm', jsonParser, async (req, res) => {
