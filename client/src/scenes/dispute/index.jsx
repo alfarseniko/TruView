@@ -9,13 +9,13 @@ import Header from "../../components/Header";
 import axios from 'axios';
 import { useEffect, useState } from "react";
 
-const Arbitrator = () => {
+const Dispute = () => {
 
-  const [arbitrator, setArbitrator] = useState([]);
+  const [ledger, setLedger] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:4000/api/arbitratorData')
+    axios.get('http://localhost:4000/api/claims')
       .then((response) => {
-        setArbitrator(response.data)
+        setLedger(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -25,24 +25,24 @@ const Arbitrator = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [{ field: "id", headerName: "ID" }, {
-    field: "documentType",
-    headerName: "Type of Document",
+    field: "typeOfClaim",
+    headerName: "Type of Claim",
     flex: 1,
     cellClassName: "name-column--cell",
   },
   {
-    field: "ipfs",
-    headerName: "IPFS Link",
+    field: "fidicClauses",
+    headerName: "FIDIC Clauses",
     flex: 1,
   },
   {
-    field: "timestamp",
-    headerName: "Timestamp",
+    field: "details",
+    headerName: "Details",
     flex: 1,
   },
   {
     field: "sentBy",
-    headerName: "Sent By",
+    headerName: "Claim By",
     flex: 1,
     renderCell: ({ row: { sentBy } }) => {
       return (
@@ -75,9 +75,9 @@ const Arbitrator = () => {
   },
   {
     field: "receivedBy",
-    headerName: "Received By",
+    headerName: "Claim For",
     flex: 1,
-    renderCell: ({ row: { receivedBy } }) => {
+    renderCell: ({ row: { stakeholder } }) => {
       return (
         <Box
           width="60%"
@@ -86,21 +86,21 @@ const Arbitrator = () => {
           display="flex"
           justifyContent="center"
           backgroundColor={
-            receivedBy === "Client"
+            stakeholder === "Client"
               ? colors.greenAccent[600]
-              : receivedBy === "Consultant"
+              : stakeholder === "Consultant"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
           }
           borderRadius="4px"
         >
-          {receivedBy === "Client" && <AdminPanelSettingsOutlinedIcon />}
-          {receivedBy === "Consultant" && <SecurityOutlinedIcon />}
-          {receivedBy === "Contractor" && <LockOpenOutlinedIcon />}
-          {receivedBy === "Sub-Contractor" && <SecurityOutlinedIcon />}
-          {receivedBy === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
+          {stakeholder === "Client" && <AdminPanelSettingsOutlinedIcon />}
+          {stakeholder === "Consultant" && <SecurityOutlinedIcon />}
+          {stakeholder === "Contractor" && <LockOpenOutlinedIcon />}
+          {stakeholder === "Sub-Contractor" && <SecurityOutlinedIcon />}
+          {stakeholder === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {receivedBy}
+            {stakeholder}
           </Typography>
         </Box>
       );
@@ -110,7 +110,7 @@ const Arbitrator = () => {
 
   return (
     <Box m="20px">
-      <Header title="ARBITRATOR'S LEDGER" subtitle="All documents shared during the project among stakeholders" />
+      <Header title="DISPUTE LEDGER" subtitle="See all disputes that have been filed in this project." />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -140,13 +140,13 @@ const Arbitrator = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={arbitrator} columns={columns} />
+        <DataGrid checkboxSelection rows={ledger} columns={columns} />
       </Box>
     </Box>
   );
 };
 
-export default Arbitrator;
+export default Dispute;
 
 /* line 103 is library 
     mockDataTeam is an object/array

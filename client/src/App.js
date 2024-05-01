@@ -18,6 +18,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Arbitrator from "./scenes/arbitrator";
+import Dispute from "./scenes/dispute";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -46,6 +47,7 @@ function App() {
               <Route path="/geography" element={<Geography />} />
               <Route path="/ledger" element={<Ledger />} />
               <Route path="/arbitrator" element={<Arbitrator />} />
+              <Route path="/dispute" element={<Dispute />} />
             </Routes>
           </main>
         </div>

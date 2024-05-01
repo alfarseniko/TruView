@@ -149,7 +149,7 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Document Management
+              Project Management
             </Typography>
             <Item
               title="Documents Sender"
@@ -165,13 +165,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Dispute Management
-            </Typography>
             <Item
               title="Claims Filer"
               to="/claims"
@@ -179,14 +172,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Dispute Ledger"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -194,6 +179,13 @@ const Sidebar = () => {
             >
               Arbitration Management
             </Typography>
+            <Item
+              title="Dispute Ledger"
+              to="/dispute"
+              icon={<HelpOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Arbitrator's Ledger"
               to="/arbitrator"

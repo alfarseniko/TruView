@@ -13,7 +13,7 @@ const Ledger = () => {
 
   const [ledger, setLedger] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:4000/api/stakeholder')
+    axios.get('http://localhost:4000/api/consultantData')
       .then((response) => {
         setLedger(response.data)
       })
@@ -44,7 +44,7 @@ const Ledger = () => {
     field: "receivedBy",
     headerName: "Received By",
     flex: 1,
-    renderCell: ({ row: { userRole } }) => {
+    renderCell: ({ row: { receivedBy } }) => {
       return (
         <Box
           width="60%"
@@ -53,21 +53,21 @@ const Ledger = () => {
           display="flex"
           justifyContent="center"
           backgroundColor={
-            userRole === "Client"
+            receivedBy === "Client"
               ? colors.greenAccent[600]
-              : userRole === "Consultant"
+              : receivedBy === "Consultant"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
           }
           borderRadius="4px"
         >
-          {userRole === "Client" && <AdminPanelSettingsOutlinedIcon />}
-          {userRole === "Consultant" && <SecurityOutlinedIcon />}
-          {userRole === "Contractor" && <LockOpenOutlinedIcon />}
-          {userRole === "Sub-Contractor" && <SecurityOutlinedIcon />}
-          {userRole === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
+          {receivedBy === "Client" && <AdminPanelSettingsOutlinedIcon />}
+          {receivedBy === "Consultant" && <SecurityOutlinedIcon />}
+          {receivedBy === "Contractor" && <LockOpenOutlinedIcon />}
+          {receivedBy === "Sub-Contractor" && <SecurityOutlinedIcon />}
+          {receivedBy === "Supplier" && <AdminPanelSettingsOutlinedIcon />}
           <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {userRole}
+            {receivedBy}
           </Typography>
         </Box>
       );
