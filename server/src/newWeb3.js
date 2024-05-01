@@ -62,6 +62,11 @@ app.get('/api/consultantData', async (req, res) => {
         txReceipt0[i]['2'] = converted;
         txReceipt0[i].timestamp = converted;
     }
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = timestampConv(txReceipt0[i].timestamp)
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
     for (let i = 0; i < 1; i++) {
         for (let i = 0; i < txReceipt0.length; i++) {
             txReceipt0[i].id = i + 1
@@ -86,12 +91,17 @@ app.get('/api/claims', async (req, res) => {
     res.send(txReceipt0);
 })
 
-//SENDING CONSULTANT DATA TO FRONTEND
+//SENDING ARBITRATOR DATA TO FRONTEND
 app.get('/api/arbitratorData', async (req, res) => {
     const txReceipt0 = await myContract.methods.getArbitratorArray().call();
 
     for (let i = 0; i < txReceipt0.length; i++) {
         let converted = txReceipt0[i].timestamp.toString();
+        txReceipt0[i]['2'] = converted;
+        txReceipt0[i].timestamp = converted;
+    }
+    for (let i = 0; i < txReceipt0.length; i++) {
+        let converted = timestampConv(txReceipt0[i].timestamp)
         txReceipt0[i]['2'] = converted;
         txReceipt0[i].timestamp = converted;
     }
@@ -165,3 +175,11 @@ app.get('/api/getForm', (req, res) => {
 app.listen(4000, () => {
     console.log('Server is running on port 4000');
 });
+
+function timestampConv(_timestamp) {
+    const timestamp = parseInt(_timestamp, 10);
+    const date = new Date(timestamp * 1000);
+    const formattedDate = date.toLocaleString(); // This will format the date and time according to the user's locale
+    console.log(formattedDate);
+    return formattedDate;
+}
