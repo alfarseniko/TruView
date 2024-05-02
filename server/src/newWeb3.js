@@ -20,12 +20,12 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 // const client = await create();
 
 // Connect to the Ethereum network using the HTTP provider
-const alchemyUrl = 'https://eth-sepolia.g.alchemy.com/v2/Ioj1JKDvtfh88uXXpjw_gQijIRxiI35z';
+const alchemyUrl = 'https://arb-sepolia.g.alchemy.com/v2/M_1r-36vl-xVOYP1zfzxNq2yKYBBfy2Q';
 const httpProvider = new Web3.providers.HttpProvider(alchemyUrl);
 const web3 = new Web3(httpProvider);
 const ADDRESS = '0xD7fe0f852EAF3781CF005786b975E3cb3700F7cF';
 const PRIVATE_KEY = '0x13ecc10453330f2dc5a4a3fd8104e925df4bc0f435df572c01e37db54b856d9a';
-const CONTRACT_ADDRESS = '0xDc67F9136b1B040440826429515a24C45eAd127c';
+const CONTRACT_ADDRESS = '0x8535F1840D47B65Ab11ac7d95B5430d017a4C867';
 const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
 
 //using CORS to allow cross-origin requests
@@ -38,7 +38,7 @@ app.use(cors(corsOption));
 
 //INITIATE THE CONTRACT ADDRESS
 const myContract = new web3.eth.Contract(newABI, CONTRACT_ADDRESS);
-// console.log(await web3.eth.getBalance(ADDRESS));
+console.log(await web3.eth.getBalance(ADDRESS));
 
 //SENDING STAKEHOLDER DATA TO THE FRONTEND
 app.get('/api/stakeholder', async (req, res) => {
@@ -201,7 +201,7 @@ app.get('/api/arbitratorData', async (req, res) => {
             txReceipt0[i].id = i + 1
         }
     }
-    
+
     for (let i = 0; i < txReceipt0.length; i++) {
         let obj = txReceipt0[i];
         let link = ipfsLinks[obj.documentType];
