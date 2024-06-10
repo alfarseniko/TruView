@@ -1,5 +1,1 @@
--add options and set them according to logic
--add id in stakeholder on blockchain
--push claims form to dispute management and display data
-    -make a claim and get claim function in smart contract first
--get the path from upload button and send path to ipfs
+This project is still incomplete.
